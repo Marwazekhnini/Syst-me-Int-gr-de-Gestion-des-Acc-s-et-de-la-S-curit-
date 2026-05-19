@@ -1,0 +1,158 @@
+{% extends 'security/base.html' %}
+
+{% block content %}
+<div class="card" style="width: 540px; max-width: 95%;">
+    <h2>📝 SYSTEM REGISTRATION</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: #ff5252; text-align: center; font-weight: bold;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Full Name</label>
+        <input type="text" name="fullname" required>
+
+        <label>ID Number (SMxxxx for Security, EMxxxx for Employee)</label>
+        <input type="text" name="user_id" placeholder="e.g., SM1234 or EM1234" required>
+
+        <label>Phone</label>
+        <input type="text" name="phone" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>System Role</label>
+        <select name="role" id="role-select" onchange="togglePostField()"
+            style="width:100%;padding:10px;margin:10px 0 20px;background:#2c2c2c;border:1px solid #444;color:#fff;border-radius:4px;">
+            <option value="security">Security Agent</option>
+            <option value="employee">Municipal Employee</option>
+        </select>
+
+        <div id="post-group" style="display:none;">
+            <label>Position / Department (Municipality Org Chart)</label>
+            <select name="post"
+                style="width:100%;padding:10px;margin:10px 0 20px;background:#2c2c2c;border:1px solid #444;color:#fff;border-radius:4px;">
+
+                <optgroup label="── Central Directorate ──" style="color:#888;">
+                    <option value="Director of Reforms">Director of Reforms</option>
+                    <option value="Internal Monitoring Platform">Internal Monitoring Platform</option>
+                    <option value="Special Secretariat">Special Secretariat</option>
+                    <option value="Implementation and Coordination Monitoring Cell">Implementation and Coordination Monitoring Cell</option>
+                </optgroup>
+
+                <optgroup label="── Direct Offices ──" style="color:#888;">
+                    <option value="Registry Office">Registry Office</option>
+                    <option value="Mail Office">Mail Office</option>
+                    <option value="Liaison Office">Liaison Office</option>
+                </optgroup>
+
+                <optgroup label="── Dept. of Planning, Monitoring & Evaluation ──" style="color:#888;">
+                    <option value="Studies and Monitoring Office">Studies and Monitoring Office</option>
+                    <option value="Planning and Reforms Monitoring Office">Planning and Reforms Monitoring Office</option>
+                    <option value="Objectives and Activities Monitoring Office">Objectives and Activities Monitoring Office</option>
+                    <option value="Public Policy Analysis Office">Public Policy Analysis Office</option>
+                    <option value="Programs Evaluation and Monitoring Office">Programs Evaluation and Monitoring Office</option>
+                    <option value="Operational Monitoring Office">Operational Monitoring Office</option>
+                    <option value="Strategic Projects Monitoring Office">Strategic Projects Monitoring Office</option>
+                    <option value="Data Analysis and Decision Support Office">Data Analysis and Decision Support Office</option>
+                    <option value="Performance Indicators Monitoring Office">Performance Indicators Monitoring Office</option>
+                    <option value="Results and Impact Evaluation Office">Results and Impact Evaluation Office</option>
+                    <option value="Commitments and Agreements Monitoring Office">Commitments and Agreements Monitoring Office</option>
+                    <option value="Cross-cutting Reforms Monitoring Office">Cross-cutting Reforms Monitoring Office</option>
+                </optgroup>
+
+                <optgroup label="── Dept. of Institutional Communication & Public Relations ──" style="color:#888;">
+                    <option value="Institutional Communication and Image Office">Institutional Communication and Image Office</option>
+                    <option value="Media Relations Office">Media Relations Office</option>
+                    <option value="Content and Publishing Office">Content and Publishing Office</option>
+                    <option value="Social Media Office">Social Media Office</option>
+                    <option value="Information and Awareness Office">Information and Awareness Office</option>
+                    <option value="Events and Campaigns Management Office">Events and Campaigns Management Office</option>
+                    <option value="Media Monitoring and E-reputation Office">Media Monitoring and E-reputation Office</option>
+                    <option value="Partnerships and Cooperation Office">Partnerships and Cooperation Office</option>
+                    <option value="Documentation and Archives Office">Documentation and Archives Office</option>
+                    <option value="Response and Complaints Management Office">Response and Complaints Management Office</option>
+                    <option value="Internal Communication Office">Internal Communication Office</option>
+                    <option value="Translation and Publication Office">Translation and Publication Office</option>
+                </optgroup>
+
+                <optgroup label="── Dept. of Institutional Development & Administrative Excellence ──" style="color:#888;">
+                    <option value="Organization and Procedures Office">Organization and Procedures Office</option>
+                    <option value="Quality and Excellence Office">Quality and Excellence Office</option>
+                    <option value="Simplification and Modernization Office">Simplification and Modernization Office</option>
+                    <option value="Risk Management and Internal Control Office">Risk Management and Internal Control Office</option>
+                    <option value="Internal Audit and Evaluation Office">Internal Audit and Evaluation Office</option>
+                    <option value="Institutional Performance Office">Institutional Performance Office</option>
+                    <option value="Innovation and Digital Transformation Office">Innovation and Digital Transformation Office</option>
+                    <option value="Knowledge Management Office">Knowledge Management Office</option>
+                    <option value="Training and Capacity Building Office">Training and Capacity Building Office</option>
+                    <option value="Change Management and Support Office">Change Management and Support Office</option>
+                    <option value="Information Systems and Digitization Office">Information Systems and Digitization Office</option>
+                </optgroup>
+
+                <optgroup label="── Dept. of Coordination, Support & General Affairs ──" style="color:#888;">
+                    <option value="Coordination and Activities Monitoring Office">Coordination and Activities Monitoring Office</option>
+                    <option value="Administration and Human Resources Office">Administration and Human Resources Office</option>
+                    <option value="Legal Affairs and Litigation Office">Legal Affairs and Litigation Office</option>
+                    <option value="Finance and Accounting Office">Finance and Accounting Office</option>
+                    <option value="Procurement and Logistics Office">Procurement and Logistics Office</option>
+                    <option value="General Resources Office">General Resources Office</option>
+                    <option value="Security and Safety Office">Security and Safety Office</option>
+                    <option value="Archives and Documentation Office">Archives and Documentation Office</option>
+                    <option value="Cooperation and External Relations Office">Cooperation and External Relations Office</option>
+                    <option value="Fleet and Transport Management Office">Fleet and Transport Management Office</option>
+                    <option value="Reception, Orientation, and User Services Office">Reception, Orientation, and User Services Office</option>
+                </optgroup>
+
+                <optgroup label="── Premises (Building Plan) ──" style="color:#888;">
+                    <option value="President's Office">President's Office</option>
+                    <option value="General Manager's Office">General Manager's Office</option>
+                    <option value="General Manager's Secretariat">General Manager's Secretariat</option>
+                    <option value="Personnel Office (Management)">Personnel Office (Management)</option>
+                    <option value="Personnel Office (Administration)">Personnel Office (Administration)</option>
+                    <option value="Financial Affairs Department">Financial Affairs Department</option>
+                    <option value="Treasury Department">Treasury Department</option>
+                    <option value="Social Affairs Office">Social Affairs Office</option>
+                    <option value="Civil Registry Office">Civil Registry Office</option>
+                    <option value="Reception">Reception</option>
+                    <option value="Meeting Room">Meeting Room</option>
+                    <option value="Municipal Council Room">Municipal Council Room</option>
+                    <option value="Surveillance Room">Surveillance Room</option>
+                    <option value="Archives Room 1">Archives Room 1</option>
+                    <option value="Archives Room 2">Archives Room 2</option>
+                    <option value="Technical Room">Technical Room</option>
+                </optgroup>
+
+            </select>
+        </div>
+
+        <label>Username</label>
+        <input type="text" name="username" required>
+
+        <label>Date of Birth</label>
+        <input type="date" name="birthday" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <button type="submit" class="btn">Create Profile</button>
+
+        <p style="text-align:center;margin-top:16px;font-size:.85rem;color:#666;">
+            Already registered? <a href="{% url 'login' %}" style="color:#d32f2f;">Login</a>
+        </p>
+    </form>
+</div>
+
+<script>
+    function togglePostField() {
+        var role = document.getElementById("role-select").value;
+        document.getElementById("post-group").style.display =
+            (role === "employee") ? "block" : "none";
+    }
+    window.onload = togglePostField;
+</script>
+{% endblock %}
